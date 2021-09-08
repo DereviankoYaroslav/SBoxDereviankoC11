@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/CLionProjects/SBoxDereviankoC11/main.c
+stdio.h
+-
+stdlib.h
+-
+windows.h
+-
+time.h
+-
+pthread.h
+-
+math.h
+-
+conio.h
+-
+
