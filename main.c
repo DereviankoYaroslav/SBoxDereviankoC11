@@ -860,31 +860,64 @@ int main(int args, char **argv) {
     fscanf(readMaxIter, "%d", &maxIter);
     fclose(readMaxIter);
 
-    int *ar = particleSwarmOptimization(256,8,N,maxIter,mode);
-
     FILE *file;
-    fopen_s(&file, "PSO results.txt", "w");
+    fopen_s(&file, "PSO results.txt", "a");
     if (file == NULL) {
         printf("ERROR: Can't save sbox to file!\n");
         for (;;);
     }
-    fprintf(file,"\n\nPSO S-boxes\n\n");
-    for (int q = 1; q < N; ++q) {
-        for (int w = 0; w < size; ++w) {
-            fprintf(file,"%d, ", ar[q * size + w]);
-        }
-        fprintf(file,"\n\n");
-    }
-    fprintf(file, "\n");
 
-    printf("\n\nPSO S-boxes\n\n");
-
-    for (int q = 1; q < N; ++q) {
-        for (int w = 0; w < size; ++w) {
-            printf("%d, ", ar[q * size + w]);
-        }
-        printf("\n\n");
+    FILE *file2;
+    fopen_s(&file2, "Results N,NL,Time.txt", "a");
+    if (file2 == NULL) {
+        printf("ERROR: Can't save sbox to file!\n");
+        for (;;);
     }
+
+    fprintf(file2, "N   NL Time");
+
+    for (N; N <= 40; N +=5) {
+
+        clock_t tic = clock();
+
+        int *ar = particleSwarmOptimization(256, 8, N, maxIter, mode);
+
+        clock_t toc = clock();
+
+        int result[N][256];
+
+        fprintf(file, "\nЧисло ітерацій = %d", maxIter);
+        fprintf(file, "\nN = %d", N);
+        fprintf(file, "\nPSO S-boxes:\n");
+        for (int q = 0; q < N; ++q) {
+            for (int w = 0; w < size; ++w) {
+                result[q][w] = ar[q * size + w];
+                fprintf(file, "%d, ", result[q][w]);
+            }
+            int LATCheck = LATMax(result[q], 256, 8);
+            int NLCheck = raiseToPower(2, 8 - 1) - LATCheck;
+            fprintf(file, "\n\nНелінійність  = %d \n", NLCheck);
+            int sp[255][256];
+            int ac[255][256];
+            int ucCheck = linearRedundancy(result[q], 256, 8, sp, ac);
+            if (ucCheck == 1) {
+                fprintf(file, "\nЛінійна збитковість = %d \n", (256) - ucCheck);
+            } else {
+                fprintf(file, "\nЛінійна збитковість = %d \n", (256 - 1) - ucCheck);
+            }
+            fprintf(file, "\n");
+        }
+        double a = (double)(toc - tic) / CLOCKS_PER_SEC;
+        int LATCheck2 = LATMax(result[1], 256, 8);
+        int NLCheck2 = raiseToPower(2, 8 - 1) - LATCheck2;
+        fprintf(file2, "\n%d    %d  %d,%d", N,NLCheck2,(int)a,(int)((-1)*(floor(a)-a)*1000000));
+        fprintf(file,"Час виконання: %f секунд\n", (double)(toc - tic) / CLOCKS_PER_SEC);
+        fprintf(file, "_______________________________________________________________________________________________");
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    fclose(file2);
 
     /*FILE *file;
     fopen_s(&file, "sbox110NLCheck.txt", "w");
