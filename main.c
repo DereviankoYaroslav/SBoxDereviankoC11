@@ -876,7 +876,7 @@ int main(int args, char **argv) {
 
     fprintf(file2, "N   NL Time");
 
-    for (N; N <= 40; N +=5) {
+    for (N; N <= 4; N +=1) {
 
         clock_t tic = clock();
 
@@ -896,16 +896,20 @@ int main(int args, char **argv) {
             }
             int LATCheck = LATMax(result[q], 256, 8);
             int NLCheck = raiseToPower(2, 8 - 1) - LATCheck;
-            fprintf(file, "\n\nНелінійність  = %d \n", NLCheck);
+            fprintf(file, "\n\nНелінійність  = %d ", NLCheck);
             int sp[255][256];
             int ac[255][256];
             int ucCheck = linearRedundancy(result[q], 256, 8, sp, ac);
+            int ai = algebraicImmunity(result[q],256,8);
+            int du = deltaUniformity(result[q],256,8);
+            fprintf(file, "\n\nАлгебраїчний імунітет  = %d \n", ai);
+            fprintf(file, "\n\nДельта-рівномірність  = %d \n", du);
             if (ucCheck == 1) {
                 fprintf(file, "\nЛінійна збитковість = %d \n", (256) - ucCheck);
             } else {
                 fprintf(file, "\nЛінійна збитковість = %d \n", (256 - 1) - ucCheck);
             }
-            fprintf(file, "\n");
+            fprintf(file, "\n\n\n");
         }
         double a = (double)(toc - tic) / CLOCKS_PER_SEC;
         int LATCheck2 = LATMax(result[1], 256, 8);
@@ -3219,11 +3223,11 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
         int rd4 = rand() % (Q);
         double xr4 = (double) rd4 / Q;
         double r2 = xr4;
-        /*printf("xr1 = %lf ", xr1);
-        printf("xr2 = %lf ", xr2);
-        printf("xr3 = %lf ", xr3);
-        printf("xr4 = %lf \n", xr4);
-        printf("\n\n");*/
+        printf("c1 = %lf ", c1);
+        printf("c2 = %lf ", c2);
+        printf("r1 = %lf ", r1);
+        printf("r2 = %lf \n", r2);
+        printf("\n\n");
         for (int b = 0; b < N; ++b) {
             arrNLSorted[b] = arrNL[b];
         }
@@ -3272,10 +3276,17 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                 }
             }
             if (i == 0) {
-                int LATCheck = LATMax(tempSbox, size, count);
-                int NLCheck = raiseToPower(2, count - 1) - LATCheck;
-                if (NLCheck == 112) {
-                    break;
+                int LAT = LATMax(tempSbox, size, count);
+                int NL = raiseToPower(2, count - 1) - LAT;
+                if (NL > 98) {
+                    for (int v = 0; v < 16; ++v) {
+                        srand(tempSbox[v] * (curIter * v) % 256);
+                        int coeff = rand() % 50;
+                        int coeff2 = rand() % 256;
+                        int temp = tempSbox[coeff];
+                        tempSbox[coeff] = tempSbox[coeff2];
+                        tempSbox[coeff2] = temp;
+                    }
                 }
             }
             for (int k = 0; k < size; ++k) {
@@ -3337,12 +3348,24 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
             }
             printf("\n\n");
         }
-        for (int m = 0; m < size; ++m){
-            gBest[m] = population[0][m];
+        if (curIter == 0) {
+            for (int m = 0; m < size; ++m) {
+                gBest[m] = population[0][m];
+            }
+            for (int i = 1; i < N; ++i) {
+                for (int j = 0; j < size; ++j) {
+                    pBest[i - 1][j] = population[i][j];
+                }
+            }
         }
-        for (int i = 1; i < N; ++i){
-            for (int j = 0; j < size; ++j){
-                pBest[i-1][j] = population[i][j];
+        else {
+            for (int m = 0; m < size; ++m) {
+                gBest[m] = population[1][m];
+            }
+            for (int i = 2; i < N; ++i) {
+                for (int j = 0; j < size; ++j) {
+                    pBest[i - 1][j] = population[i][j];
+                }
             }
         }
         printf("\n\n");
@@ -3359,6 +3382,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
         }
         maxIter = maxIter-1;
         mode = 0;
+        ++curIter;
     }
     //printf("\n\nFinal data\n\n");
     int *result = calloc(N*size, sizeof(int));
