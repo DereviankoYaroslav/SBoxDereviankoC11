@@ -903,7 +903,7 @@ int main(int args, char **argv) {
             int ai = algebraicImmunity(result[q],256,8);
             int du = deltaUniformity(result[q],256,8);
             fprintf(file, "\n\nАлгебраїчний імунітет  = %d \n", ai);
-            fprintf(file, "\n\nДельта-рівномірність  = %d \n", du);
+            fprintf(file, "\nДельта-рівномірність  = %d \n", du);
             if (ucCheck == 1) {
                 fprintf(file, "\nЛінійна збитковість = %d \n", (256) - ucCheck);
             } else {
