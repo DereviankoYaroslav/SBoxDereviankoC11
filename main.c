@@ -140,7 +140,7 @@ int *SBoxGeneratingDec(int n, int m, int counter);
 
 int NLOfSBoxDec(int *sbox, int size, int count);
 
-int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode);
+int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode, int *finalIter);
 
 void FisherYates(int *player, int n);
 
@@ -840,88 +840,85 @@ int main(int args, char **argv) {
     }
     printf("\nS-box with not zero redundancy -  %d \n", flag);
     free(ar2);*/
+    int finalIter = 0;
     int mode;
-    int N;
-    int maxIter;
-
-
-    FILE *readMode;
-    readMode = fopen("Mode.txt", "r");
-    fscanf(readMode, "%d", &mode);
-    fclose(readMode);
-
-    FILE *readN;
-    readN = fopen("N value (amount of s-boxes in population).txt", "r");
-    fscanf(readN, "%d", &N);
-    fclose(readN);
-
-    FILE *readMaxIter;
-    readMaxIter = fopen("maxIter value (number of iterations).txt", "r");
-    fscanf(readMaxIter, "%d", &maxIter);
-    fclose(readMaxIter);
-
-    FILE *file;
-    fopen_s(&file, "PSO results.txt", "a");
-    if (file == NULL) {
-        printf("ERROR: Can't save sbox to file!\n");
-        for (;;);
-    }
+    int N = 2;
+    int maxIter = 5;
 
     FILE *file2;
-    fopen_s(&file2, "Results N,NL,Time.txt", "a");
+    fopen_s(&file2, "Table results N, MaxIter, IterToFind.txt", "a");
     if (file2 == NULL) {
         printf("ERROR: Can't save sbox to file!\n");
         for (;;);
     }
 
-    fprintf(file2, "N   NL Time");
+    for (int i = 2; i<=4; i+=2) {
+        for (int j = 5; j <= 10; j += 5) {
 
-    for (N; N <= 4; N +=1) {
-
-        clock_t tic = clock();
-
-        int *ar = particleSwarmOptimization(256, 8, N, maxIter, mode);
-
-        clock_t toc = clock();
-
-        int result[N][256];
-
-        fprintf(file, "\nЧисло ітерацій = %d", maxIter);
-        fprintf(file, "\nN = %d", N);
-        fprintf(file, "\nPSO S-boxes:\n");
-        for (int q = 0; q < N; ++q) {
-            for (int w = 0; w < size; ++w) {
-                result[q][w] = ar[q * size + w];
-                fprintf(file, "%d, ", result[q][w]);
+            FILE *file;
+            fopen_s(&file, "PSO results.txt", "a");
+            if (file == NULL) {
+                printf("ERROR: Can't save sbox to file!\n");
+                for (;;);
             }
-            int LATCheck = LATMax(result[q], 256, 8);
-            int NLCheck = raiseToPower(2, 8 - 1) - LATCheck;
-            fprintf(file, "\n\nНелінійність  = %d ", NLCheck);
-            int sp[255][256];
-            int ac[255][256];
-            int ucCheck = linearRedundancy(result[q], 256, 8, sp, ac);
-            int ai = algebraicImmunity(result[q],256,8);
-            int du = deltaUniformity(result[q],256,8);
-            fprintf(file, "\n\nАлгебраїчний імунітет  = %d \n", ai);
-            fprintf(file, "\nДельта-рівномірність  = %d \n", du);
-            if (ucCheck == 1) {
-                fprintf(file, "\nЛінійна збитковість = %d \n", (256) - ucCheck);
-            } else {
-                fprintf(file, "\nЛінійна збитковість = %d \n", (256 - 1) - ucCheck);
+
+            mode = 1;
+
+            clock_t tic = clock();
+
+            int *ar = particleSwarmOptimization(256, 8, i, j, mode, &finalIter);
+            printf("final current iter = %d ",finalIter);
+
+            clock_t toc = clock();
+
+            int result[i][256];
+
+            fprintf(file, "\nПочаткове число ітерацій = %d", j);
+            fprintf(file, "\nN = %d", i);
+            fprintf(file, "\nPSO S-boxes:\n");
+            for (int q = 0; q < i; ++q) {
+                for (int w = 0; w < size; ++w) {
+                    result[q][w] = ar[q * size + w];
+                    fprintf(file, "%d, ", result[q][w]);
+                }
+                int LATCheck = LATMax(result[q], 256, 8);
+                int NLCheck = raiseToPower(2, 8 - 1) - LATCheck;
+                fprintf(file, "\n\nНелінійність  = %d ", NLCheck);
+                int sp[255][256];
+                int ac[255][256];
+                int ucCheck = linearRedundancy(result[q], 256, 8, sp, ac);
+                int ai = algebraicImmunity(result[q], 256, 8);
+                int du = deltaUniformity(result[q], 256, 8);
+                fprintf(file, "\n\nАлгебраїчний імунітет  = %d \n", ai);
+                fprintf(file, "\nДельта-рівномірність  = %d \n", du);
+                if (ucCheck == 1) {
+                    fprintf(file, "\nЛінійна збитковість = %d \n", (256) - ucCheck);
+                } else {
+                    fprintf(file, "\nЛінійна збитковість = %d \n", (256 - 1) - ucCheck);
+                }
+                fprintf(file, "\n\n\n");
             }
-            fprintf(file, "\n\n\n");
+            double a = (double) (toc - tic) / CLOCKS_PER_SEC;
+            int LATCheck2 = LATMax(result[1], 256, 8);
+            int NLCheck2 = raiseToPower(2, 8 - 1) - LATCheck2;
+            fprintf(file, "Час виконання: %f секунд\n", (double) (toc - tic) / CLOCKS_PER_SEC);
+            if (finalIter == 0){
+                fprintf(file, "\nБлок з необхідними параметрами не знайдено\n");
+            }
+            else if (finalIter > 0) {
+                fprintf(file, "\nБлок з необхідними параметрами знайдено\n");
+                fprintf(file, "\nКількість виконаних ітерацій = %d \n", finalIter);
+            }
+            fprintf(file,
+                    "_______________________________________________________________________________________________");
+            fprintf(file, "\n");
+
+            fclose(file);
+            finalIter = 0;
+            free(ar);
         }
-        double a = (double)(toc - tic) / CLOCKS_PER_SEC;
-        int LATCheck2 = LATMax(result[1], 256, 8);
-        int NLCheck2 = raiseToPower(2, 8 - 1) - LATCheck2;
-        fprintf(file2, "\n%d    %d  %d,%d", N,NLCheck2,(int)a,(int)((-1)*(floor(a)-a)*1000000));
-        fprintf(file,"Час виконання: %f секунд\n", (double)(toc - tic) / CLOCKS_PER_SEC);
-        fprintf(file, "_______________________________________________________________________________________________");
-        fprintf(file, "\n");
     }
 
-    fclose(file);
-    fclose(file2);
 
     /*FILE *file;
     fopen_s(&file, "sbox110NLCheck.txt", "w");
@@ -3128,8 +3125,9 @@ int NLOfSBoxDec(int *sbox, int size, int count) {
 
 //Функція генерації S-Box'у за допомогою методу Рою Часток
 
-int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode){
+int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode, int *finalIter){
     srand(time(NULL));
+    int iter = 0;
     int flag = rand()%size;
     int population[2*N][size];
     for (int i = 0; i < size; ++i){
@@ -3282,7 +3280,9 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                     for (int v = 0; v < 16; ++v) {
                         srand(tempSbox[v] * (curIter * v) % 256);
                         int coeff = rand() % 50;
+                        printf("coeff1 %d", coeff);
                         int coeff2 = rand() % 256;
+                        printf("coeff2 %d", coeff2);
                         int temp = tempSbox[coeff];
                         tempSbox[coeff] = tempSbox[coeff2];
                         tempSbox[coeff2] = temp;
@@ -3380,12 +3380,40 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
             }
             printf("\n\n");
         }
+        for (int h = 1; h < N; ++h){
+            int LAT3 = LATMax(population[h], size, count);
+            int NL3 = raiseToPower(2, count - 1) - LAT3;
+            printf("\nNon-linearity from LAT = %d \n", NL3);
+            printf("\n");
+            int sp3[255][256];
+            int ac3[255][256];
+            int ucCheck3 = linearRedundancy(population[h], 256, 8, sp3, ac3);
+            int ai3 = algebraicImmunity(population[h],256,8);
+            int du3 = deltaUniformity(population[h],256,8);
+            printf( "\n\nImmunity   = %d \n", ai3);
+            printf("\nDelta-Uniformity  = %d \n", du3);
+            int lr;
+            if (ucCheck3 == 1) {
+                printf("\nLinear redundancy = %d \n", (256) - ucCheck3);
+                lr = 256-ucCheck3;
+            } else {
+                printf("\nLinear redundancy = %d \n", (256 - 1) - ucCheck3);
+                lr = (256 - 1) - ucCheck3;
+            }
+            if (NL3 == 102 && ai3 == 3 && lr == 0){
+                printf("current iter = %d ",curIter+1);
+                *finalIter = curIter+1;
+                maxIter = -99;
+                break;
+            }
+        }
         maxIter = maxIter-1;
         mode = 0;
         ++curIter;
     }
     //printf("\n\nFinal data\n\n");
     int *result = calloc(N*size, sizeof(int));
+    //printf("final current iter = %d ",*finalIter);
     for (int q = 0; q < N; ++q) {
         for (int w = 0; w < size; ++w) {
             result[q * size + w] = population[q][w];
