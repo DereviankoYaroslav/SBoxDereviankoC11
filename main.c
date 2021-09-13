@@ -846,11 +846,18 @@ int main(int args, char **argv) {
     int maxIter = 5;
 
     FILE *file2;
-    fopen_s(&file2, "Table results N, MaxIter, IterToFind.txt", "a");
+    fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
     if (file2 == NULL) {
         printf("ERROR: Can't save sbox to file!\n");
         for (;;);
     }
+
+    fprintf(file2, "\nНеобхідні параметри:");
+    fprintf(file2, "\nНелінійність => 102");
+    fprintf(file2, "\nАлгебраїчний імунітет = 3");
+    fprintf(file2, "\nЛінійна збитковість = 0\n\n");
+
+    fprintf(file2, "N    MaxIter     IterToFind     Time");
 
     for (int i = 2; i<=4; i+=2) {
         for (int j = 5; j <= 10; j += 5) {
@@ -904,10 +911,12 @@ int main(int args, char **argv) {
             fprintf(file, "Час виконання: %f секунд\n", (double) (toc - tic) / CLOCKS_PER_SEC);
             if (finalIter == 0){
                 fprintf(file, "\nБлок з необхідними параметрами не знайдено\n");
+                fprintf(file2, "\n%d       %d              %s        %d,%d", i,j," - ",(int)a,(int)((-1)*(floor(a)-a)*1000000));
             }
             else if (finalIter > 0) {
                 fprintf(file, "\nБлок з необхідними параметрами знайдено\n");
                 fprintf(file, "\nКількість виконаних ітерацій = %d \n", finalIter);
+                fprintf(file2, "\n%d       %d              %d        %d,%d", i,j,finalIter,(int)a,(int)((-1)*(floor(a)-a)*1000000));
             }
             fprintf(file,
                     "_______________________________________________________________________________________________");
@@ -918,6 +927,7 @@ int main(int args, char **argv) {
             free(ar);
         }
     }
+    fclose(file2);
 
 
     /*FILE *file;
