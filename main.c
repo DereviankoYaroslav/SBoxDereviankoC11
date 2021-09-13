@@ -842,8 +842,8 @@ int main(int args, char **argv) {
     free(ar2);*/
     int finalIter = 0;
     int mode;
-    int N = 2;
-    int maxIter = 5;
+    //int N = 2;
+    //int maxIter = 5;
 
     FILE *file2;
     fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
@@ -859,8 +859,18 @@ int main(int args, char **argv) {
 
     fprintf(file2, "N    MaxIter     IterToFind     Time");
 
-    for (int i = 2; i<=4; i+=2) {
-        for (int j = 5; j <= 10; j += 5) {
+    fclose(file2);
+
+    for (int i = 5; i<=40; i+=5) {
+        for (int j = 50; j <= 200; j += 50) {
+
+            mode = 1;
+
+            clock_t tic = clock();
+
+            int *ar = particleSwarmOptimization(256, 8, i, j, mode, &finalIter);
+
+            clock_t toc = clock();
 
             FILE *file;
             fopen_s(&file, "PSO results.txt", "a");
@@ -869,14 +879,13 @@ int main(int args, char **argv) {
                 for (;;);
             }
 
-            mode = 1;
+            fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
+            if (file2 == NULL) {
+                printf("ERROR: Can't save sbox to file!\n");
+                for (;;);
+            }
 
-            clock_t tic = clock();
-
-            int *ar = particleSwarmOptimization(256, 8, i, j, mode, &finalIter);
             printf("final current iter = %d ",finalIter);
-
-            clock_t toc = clock();
 
             int result[i][256];
 
@@ -923,11 +932,11 @@ int main(int args, char **argv) {
             fprintf(file, "\n");
 
             fclose(file);
+            fclose(file2);
             finalIter = 0;
             free(ar);
         }
     }
-    fclose(file2);
 
 
     /*FILE *file;
@@ -3287,7 +3296,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                 int LAT = LATMax(tempSbox, size, count);
                 int NL = raiseToPower(2, count - 1) - LAT;
                 if (NL > 98) {
-                    for (int v = 0; v < 16; ++v) {
+                    for (int v = 0; v < 15; ++v) {
                         srand(tempSbox[v] * (curIter * v) % 256);
                         int coeff = rand() % 50;
                         printf("coeff1 %d", coeff);
