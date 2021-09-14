@@ -727,25 +727,25 @@ int main(int args, char **argv) {
         printf("%d, ", ar2[i]);
     }*/
 
-    /*int ar2[] = {0x82, 0xD3, 0x21, 0x1F, 0x95, 0xDC, 0x4E, 0x86, 0x5A, 0x68, 0x8D, 0x47, 0xC4, 0x31, 0xA0, 0x5E,
-    0xCE, 0x20, 0xD7, 0xB6, 0x56, 0x2C, 0x33, 0x05, 0x81, 0x8F, 0x08, 0x32, 0xB3, 0x8A, 0xCC, 0x58,
-    0x84, 0x22, 0xF3, 0x5C, 0x7B, 0x1E, 0xB8, 0x6C, 0xC8, 0x71, 0xF5, 0x6F, 0x09, 0x04, 0x12, 0xC5,
-    0x50, 0xD4, 0x57, 0x0A, 0xE7, 0x78, 0xFA, 0x4D, 0x49, 0xB4, 0xA6, 0x97, 0x85, 0x3E, 0xCF, 0x0E,
-    0xA1, 0x10, 0xF2, 0x3C, 0x69, 0x17, 0xCD, 0x00, 0x2D, 0x0B, 0xA2, 0xDB, 0xBF, 0x67, 0xD5, 0x2F,
-    0x87, 0x19, 0x28, 0xFB, 0x6A, 0xB1, 0x27, 0xB5, 0x14, 0x8C, 0xE1, 0xD9, 0xEA, 0x9C, 0x72, 0x9F,
-    0xCB, 0xEE, 0x89, 0xA9, 0x3B, 0x83, 0xE6, 0x2A, 0x63, 0x93, 0xDF, 0xC1, 0x9E, 0x41, 0x36, 0xC9,
-    0x34, 0xF4, 0xB9, 0x38, 0xB0, 0x4B, 0x5B, 0x16, 0x52, 0xBE, 0xFC, 0x98, 0x77, 0x92, 0xE4, 0xAB,
-    0x40, 0x73, 0xEB, 0x42, 0x9A, 0x9B, 0xFD, 0x64, 0x24, 0xA7, 0x1B, 0xDD, 0x76, 0x62, 0xE3, 0xEC,
-    0x06, 0x80, 0x15, 0x46, 0xB2, 0x02, 0x7D, 0xA8, 0x4F, 0x18, 0x23, 0x3F, 0x7A, 0x3A, 0x07, 0x8E,
-    0x53, 0x66, 0x1C, 0xED, 0xF7, 0xD0, 0x6D, 0x39, 0xD6, 0x0C, 0x48, 0x26, 0x03, 0x8B, 0x4A, 0x6B,
-    0xE9, 0xF0, 0xA5, 0xC7, 0x60, 0xE5, 0x7C, 0x88, 0x96, 0x25, 0xAD, 0xC6, 0xDA, 0x55, 0x5F, 0x11,
-    0x75, 0xC0, 0x94, 0x1A, 0x54, 0xA3, 0x44, 0xE0, 0x0D, 0xB7, 0x51, 0x2E, 0x90, 0xE2, 0xF6, 0xBA,
-    0xBD, 0x0F, 0x59, 0x01, 0x7F, 0xEF, 0x70, 0x37, 0xAC, 0xA4, 0x30, 0x13, 0xF8, 0xFE, 0x74, 0xDE,
-    0xF9, 0xC2, 0x99, 0x65, 0x4C, 0x29, 0xFF, 0xC3, 0xBB, 0xD1, 0x35, 0x6E, 0x3D, 0x5D, 0xE8, 0xAE,
-    0xCA, 0x7E, 0xBC, 0x1D, 0x9D, 0x43, 0xAF, 0xF1, 0x2B, 0x79, 0xAA, 0x61, 0x91, 0xD2, 0x45, 0xD8};
+    /*int ar3[] = {0x80, 0x7D, 0x45, 0xBB, 0xF0, 0x06, 0x62, 0x97, 0xBA, 0x53, 0x76, 0x9C, 0x61, 0x83, 0xFA, 0x1B,
+                 0x56, 0xB5, 0x43, 0xA3, 0x6B, 0x83, 0x29, 0xC2, 0x3D, 0xCA, 0x21, 0xD5, 0xAB, 0x57, 0xE0, 0x1F,
+                 0xE7, 0x21, 0x4F, 0x8A, 0x08, 0xC5, 0xF7, 0x39, 0xDE, 0x0C, 0x7F, 0xAE, 0x9A, 0x43, 0x6C, 0xB6,
+                 0x05, 0xDD, 0x7D, 0xA6, 0xA7, 0x74, 0x88, 0x58, 0x6D, 0xA1, 0x1C, 0xD3, 0x64, 0xA3, 0x42, 0x86,
+                 0x3C, 0xCD, 0x00, 0xF2, 0x89, 0x73, 0xE2, 0x1B, 0x9F, 0x7A, 0xAA, 0x4C, 0x81, 0x6F, 0xE3, 0x0E,
+                 0x2D, 0xC2, 0xC1, 0x2D, 0xD5, 0x31, 0x6E, 0x89, 0xDF, 0x24, 0x3A, 0xC2, 0x8C, 0x7C, 0x3E, 0xCD,
+                 0x30, 0xFA, 0x61, 0xA8, 0x1A, 0xDB, 0x1C, 0xDE, 0x90, 0x4E, 0xC8, 0x15, 0x11, 0xC4, 0x1E, 0xC8,
+                 0x15, 0xC1, 0x94, 0x43, 0x72, 0xAD, 0xA4, 0x78, 0xE4, 0x24, 0x6C, 0xAF, 0x28, 0xE3, 0xF7, 0x3F,
+                 0x7F, 0x82, 0x7A, 0x84, 0x8F, 0x79, 0xDD, 0x28, 0xC5, 0x2C, 0xC9, 0x23, 0x9E, 0x7C, 0xC5, 0x24,
+                 0xE9, 0x0A, 0x3C, 0xDC, 0x54, 0xBC, 0xD6, 0x3D, 0x02, 0xF5, 0xDE, 0x2A, 0x14, 0xE8, 0x9F, 0x60,
+                 0x18, 0xDE, 0x70, 0xB5, 0x77, 0xBA, 0x48, 0x86, 0xA1, 0x73, 0xC0, 0x11, 0x65, 0xBC, 0x53, 0x89,
+                 0xBA, 0x62, 0x02, 0xD9, 0x98, 0x4B, 0x77, 0xA7, 0x52, 0x9E, 0xE3, 0x2C, 0xDB, 0x1C, 0x3D, 0xF9,
+                 0x43, 0xB2, 0xBF, 0x4D, 0x76, 0x8C, 0xDD, 0x24, 0x60, 0x85, 0x95, 0x73, 0xFE, 0x10, 0x5C, 0xB1,
+                 0x12, 0xFD, 0x3E, 0xD2, 0x6A, 0x8E, 0x11, 0xF6, 0x60, 0x9B, 0x45, 0xBD, 0xB3, 0x43, 0xC1, 0x32,
+                 0x4F, 0x85, 0xDE, 0x17, 0xE5, 0x24, 0x23, 0xE1, 0x6F, 0xB1, 0xF7, 0x2A, 0x6E, 0xBB, 0xA1, 0x77,
+                 0x2A, 0xFE, 0x6B, 0xBC, 0xCD, 0x12, 0xDB, 0x07, 0x5B, 0x9B, 0x13, 0xD0, 0x17, 0xDC, 0x08, 0xC0};
 
     for (int i = 0; i <256; ++i){
-        printf("%d, ", ar2[i]);
+        printf("%d, ", ar3[i]);
     }*/
 
     //int ar2[] = {30, 43, 217, 136, 160, 233, 123, 179, 111, 93, 184, 114, 241, 4, 149, 107, 251, 21, 226, 131, 99, 25, 6, 48, 180, 186, 61, 7, 134, 191, 249, 109, 177, 23, 198, 105, 78, 183, 141, 89, 253, 68, 192, 90, 60, 49, 39, 240, 101, 225, 98, 63, 210, 77, 207, 120, 124, 129, 147, 162, 176, 11, 250, 59, 148, 37, 199, 9, 92, 34, 248, 53, 24, 62, 151, 238, 138, 82, 224, 26, 178, 44, 29, 206, 95, 132, 18, 128, 33, 185, 212, 236, 223, 169, 71, 170, 254, 219, 188, 156, 14, 182, 211, 31, 86, 166, 234, 244, 171, 116, 3, 252, 1, 193, 140, 13, 133, 126, 110, 35, 103, 139, 201, 173, 66, 167, 209, 158, 117, 70, 222, 119, 175, 174, 200, 81, 17, 146, 46, 232, 67, 87, 214, 230, 51, 181, 32, 115, 135, 55, 72, 157, 122, 45, 22, 10, 79, 15, 50, 187, 102, 83, 41, 216, 194, 229, 88, 12, 227, 57, 125, 19, 54, 190, 127, 94, 220, 197, 144, 242, 85, 208, 73, 189, 163, 16, 152, 243, 239, 96, 106, 36, 64, 245, 161, 47, 97, 150, 113, 213, 56, 130, 100, 27, 165, 215, 195, 143, 20, 58, 108, 52, 74, 218, 69, 2, 153, 145, 5, 38, 205, 203, 65, 235, 204, 247, 172, 80, 121, 28, 202, 246, 142, 228, 0, 91, 8, 104, 221, 155, 255, 75, 137, 40, 168, 118, 154, 196, 42, 76, 159, 84, 164, 231, 112, 237};
@@ -841,9 +841,9 @@ int main(int args, char **argv) {
     printf("\nS-box with not zero redundancy -  %d \n", flag);
     free(ar2);*/
     int finalIter = 0;
-    int mode;
-    //int N = 2;
-    //int maxIter = 5;
+    int mode = 1;
+    int N = 4;
+    int maxIter = 10;
 
     FILE *file2;
     fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
@@ -853,7 +853,7 @@ int main(int args, char **argv) {
     }
 
     fprintf(file2, "\nНеобхідні параметри:");
-    fprintf(file2, "\nНелінійність => 102");
+    fprintf(file2, "\nНелінійність => 104");
     fprintf(file2, "\nАлгебраїчний імунітет = 3");
     fprintf(file2, "\nЛінійна збитковість = 0\n\n");
 
@@ -861,14 +861,10 @@ int main(int args, char **argv) {
 
     fclose(file2);
 
-    for (int i = 5; i<=40; i+=5) {
-        for (int j = 50; j <= 200; j += 50) {
-
-            mode = 1;
 
             clock_t tic = clock();
 
-            int *ar = particleSwarmOptimization(256, 8, i, j, mode, &finalIter);
+            int *ar = particleSwarmOptimization(256, 8, N, maxIter, mode, &finalIter);
 
             clock_t toc = clock();
 
@@ -887,12 +883,12 @@ int main(int args, char **argv) {
 
             printf("final current iter = %d ",finalIter);
 
-            int result[i][256];
+            int result[N][256];
 
-            fprintf(file, "\nПочаткове число ітерацій = %d", j);
-            fprintf(file, "\nN = %d", i);
+            fprintf(file, "\nПочаткове число ітерацій = %d", maxIter);
+            fprintf(file, "\nN = %d", N);
             fprintf(file, "\nPSO S-boxes:\n");
-            for (int q = 0; q < i; ++q) {
+            for (int q = 0; q < N; ++q) {
                 for (int w = 0; w < size; ++w) {
                     result[q][w] = ar[q * size + w];
                     fprintf(file, "%d, ", result[q][w]);
@@ -920,12 +916,12 @@ int main(int args, char **argv) {
             fprintf(file, "Час виконання: %f секунд\n", (double) (toc - tic) / CLOCKS_PER_SEC);
             if (finalIter == 0){
                 fprintf(file, "\nБлок з необхідними параметрами не знайдено\n");
-                fprintf(file2, "\n%d       %d              %s        %d,%d", i,j," - ",(int)a,(int)((-1)*(floor(a)-a)*1000000));
+                fprintf(file2, "\n%d       %d              %s        %d,%d", N,maxIter," - ",(int)a,(int)((-1)*(floor(a)-a)*1000000));
             }
             else if (finalIter > 0) {
                 fprintf(file, "\nБлок з необхідними параметрами знайдено\n");
                 fprintf(file, "\nКількість виконаних ітерацій = %d \n", finalIter);
-                fprintf(file2, "\n%d       %d              %d        %d,%d", i,j,finalIter,(int)a,(int)((-1)*(floor(a)-a)*1000000));
+                fprintf(file2, "\n%d       %d              %d        %d,%d", N,maxIter,finalIter,(int)a,(int)((-1)*(floor(a)-a)*1000000));
             }
             fprintf(file,
                     "_______________________________________________________________________________________________");
@@ -935,9 +931,25 @@ int main(int args, char **argv) {
             fclose(file2);
             finalIter = 0;
             free(ar);
-        }
-    }
 
+
+
+    /*int ar2[] = {128, 125, 69, 187, 240, 6, 98, 151, 186, 83, 118, 156, 97, 131, 250, 27, 86, 181, 67, 163, 107, 131, 41, 194, 61, 202, 33, 213, 171, 87, 224, 31, 231, 33, 79, 138, 8, 197, 247, 57, 222, 12, 127, 174, 154, 67, 108, 182, 5, 221, 125, 166, 167
+            , 116, 136, 88, 109, 161, 28, 211, 100, 163, 66, 134, 60, 205, 0, 242, 137, 115, 226, 27, 159, 122, 170, 76, 129, 111, 227, 14, 45, 194, 193, 45, 213, 49, 110, 137, 223, 36, 58, 194, 140, 124, 62, 205, 48, 250, 97, 168, 26, 219, 28, 222, 144, 78, 200, 21, 17, 196, 30, 200, 21, 193, 148, 67, 114, 173, 164, 120, 228, 36, 108, 175, 40, 227, 247, 63, 127, 130, 122, 132, 143, 121, 221, 40, 197, 44, 201, 35, 158, 124, 197, 36, 233, 10, 60, 220, 84, 188, 214, 61, 2, 245, 222, 42, 20
+            , 232, 159, 96, 24, 222, 112, 181, 119, 186, 72, 134, 161, 115, 192, 17, 101, 188, 83, 137, 186, 98, 2, 217, 152, 75, 119, 167, 82, 158, 227, 44, 219, 28, 61, 249, 67, 178, 191, 77, 118, 140, 221, 36, 96, 133, 149, 115, 254, 16, 92, 177, 18
+            , 253, 62, 210, 106, 142, 17, 246, 96, 155, 69, 189, 179, 67, 193, 50, 79, 133, 222, 23, 229, 36, 35, 225, 111, 177, 247
+            , 42, 110, 187, 161, 119, 42, 254, 107, 188, 205, 18, 219, 7, 91, 155, 19, 208, 23, 220, 8, 192};
+
+
+    int sp[255][256];
+    int ac[255][256];
+    int ucCheck = linearRedundancy(ar2, 256, 8, sp, ac);
+    if (ucCheck == 1) {
+        printf("\nLR = %d \n", (256) - ucCheck);
+    } else {
+        printf("\nLR = %d \n", (256 - 1) - ucCheck);
+    }
+    printf("\n\n\n");*/
 
     /*FILE *file;
     fopen_s(&file, "sbox110NLCheck.txt", "w");
@@ -2961,6 +2973,14 @@ int linearRedundancy(int *sbox, int size, int count, int sp [size-1][size], int 
     int *ar1 = SBoxToBooleanFunc(sbox, size, count);
     //printf("\n1");
     int *ar2 = linearCombinations(ar1, size, count);
+    /*for (int i = 0; i < size-1; ++i){
+        for(int j = 0; j<size; ++j){
+            printf("%d ", sp[i][j]);
+        }
+        printf("%d ",counter);
+        printf("\n");
+        counter++;
+    }*/
     free(ar1);
     //printf("\n2");
     //int *ar5 = calloc((size-1),sizeof(int));
@@ -3079,14 +3099,17 @@ int linearRedundancy(int *sbox, int size, int count, int sp [size-1][size], int 
         }*/
         //printf("\nOC ==%d ", OuterCounter);
     }
-    /*printf("\nHADAMARD SPECTRUM AFTER\n");
+    /*int counter = 0;
+    printf("\nHADAMARD SPECTRUM AFTER\n");
     for (int i = 0; i < size-1; ++i){
         for(int j = 0; j<size; ++j){
             printf("%d ", sp[i][j]);
         }
+        printf("%d ",counter);
         printf("\n");
-    }
-    printf("\nAUTO CORRELATION FUNCTIONS AFTER\n");
+        counter++;
+    }*/
+    /*printf("\nAUTO CORRELATION FUNCTIONS AFTER\n");
     for (int i = 0; i < size-1; ++i){
         for(int j = 0; j<size; ++j){
             printf("%d ", ac[i][j]);
@@ -3419,7 +3442,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                 printf("\nLinear redundancy = %d \n", (256 - 1) - ucCheck3);
                 lr = (256 - 1) - ucCheck3;
             }
-            if (NL3 == 102 && ai3 == 3 && lr == 0){
+            if (NL3 >= 104 && ai3 == 3 && lr == 0){
                 printf("current iter = %d ",curIter+1);
                 *finalIter = curIter+1;
                 maxIter = -99;
