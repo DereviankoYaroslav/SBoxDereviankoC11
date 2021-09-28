@@ -1,0 +1,59 @@
+________________________________________________
+Take input arguments as:
+N ← number of populations
+max_itr ← maximum number of iterations
+xr ← initial value of Renyi chaotic map
+c ← parameter of Renyi map
+________________________________________________
+Generate initial population of S-boxes as:
+xr ← renyi_map(xr, c, 100) // Iterating map for 100 times to remove transient effect of map
+population ← zeros(2 × N, 256) // 256 is for 8 × 8 S-box
+for i ← 1 to N
+	[sboxi, xr] ← gen_sbox(xr, c)
+	population[i] ← sboxi
+end for
+population[1] ← aes_sbox
+__________________________________________________________________
+Calculate the fitness score (nonlinearity) of each particle as:
+for i ←1 to N do:
+NL[i] ← nonlinearity(population[i])
+end for
+NL_sorted ← sort(NL) // in descending order
+gBest ← population[1]
+pBesti ← population[i]
+Vel ← zeros(N, 256) // 256 is for 8 × 8 S-box
+Take inertial weight w // default is 0.6
+______________________________________________________
+Begin optimization phase as:
+While (max_itr > 0) do:
+	xr ← renyi_map(xr, c); c1 ← 2∗xr
+	xr ← renyi_map(xr, c); c2 ← 2∗xr
+	xr ← renyi_map(xr, c); r1 ← xr
+	xr ← renyi_map(xr, c); r2 ← xr
+	NL ← NL_sorted
+	for i ← 1 to N do:
+		for j = 1 to 256 do:
+			Vel[i][j] ← ceil(w∗Vel[i][j] + c1∗r1∗(pBest[i][j] - population[i][j]) + c2∗r2∗(gBest[j]-population[i][j]))
+			if (Vel[i][j] < 0)
+				Vel[i][j] ← (Vel[i][j] + 256)mod(256)
+			end if
+			X[i, j] ← int(population[i][j] + Vel[i][j])mod(256)
+			temp_sbox[j] ← X[i, j]
+		end for
+		Perform adjustment to preserve the bijectivity in temp_sbox
+		population[N + i] ← temp_sbox
+	end for
+	for i ← 1 to N do:
+		NL_sorted[N + i] ← nonlinearity(population[N + i])
+	end for
+	NL_sorted ← sort(NL_sorted)
+	Arrange population vector according to sorted fitness & keep first N S-boxes and drop the rest
+	for i ← 1 to N do:
+		if (NL[i] < NL_sorted[i])
+			pBest[i] ← population[i]
+		end if
+	end for
+	Update the gBest
+	max_itr ← max_itr - 1
+end while
+____________________________________________________________________

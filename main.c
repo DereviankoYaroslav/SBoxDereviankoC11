@@ -148,6 +148,8 @@ void bubblesortDescending(int *data, int size);
 
 int myModulusDec(int number, int mod);
 
+int *CombFromWHTMatrix(int *func, int size, int count);
+
 CONST int aesSbox[] = {99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118, 202, 130, 201, 125, 250,
                        89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192, 183, 253, 147, 38, 54, 63, 247, 204, 52, 165,
                        229, 241, 113, 216, 49, 21, 4, 199, 35, 195, 24, 150, 5, 154, 7, 18, 128, 226, 235, 39, 178, 117,
@@ -429,10 +431,6 @@ int main(int args, char **argv) {
 
     //HillClimbing(fx, ar8, size, n);
 
-    //n = 4;
-    //size = raiseToPower(2,n);
-
-    //int fx2[] = {0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1};
 
     //int fx2[] = {1,0,1,1};
 
@@ -446,18 +444,18 @@ int main(int args, char **argv) {
                      1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1,
                      1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0,};*/
 
-    /*srand ( time(NULL) );
-    for (int i = 0; i < size; ++i){
-        fx2[i] = rand() % 2;
-    }
-    printf("\nMY FUNCTION 2^8");
-    printf("\n");
-    for (int i = 0; i < size; ++i){
-        printf("%d, ", fx2[i]);
-    }
-    printf("\n");*/
+    /*n = 4;
+    size = raiseToPower(2,n);*/
 
-    //int *ar9 = roundableHillClimbing(fx, size, n);
+    int fx2[] = {1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,0,1,0,1,1,0};
+
+    //int fx2[] = {1,1,0,1,1,1,0,1,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,0,1,0,1,1,0};
+
+    size = 64;
+    n = 6;
+    int *fxres = CombFromWHTMatrix(fx2, size, n);
+
+    //int *ar9 = roundableHillClimbing(fx2, size, n);
 
     /*printf("\n");
     int newNonLin = ar9[0];
@@ -842,13 +840,21 @@ int main(int args, char **argv) {
     }
     printf("\nS-box with not zero redundancy -  %d \n", flag);
     free(ar2);*/
-    int finalIter = 0;
+
+    /*int ar[] = {2,3,1,0};
+
+    int LAT = LATMax(ar,4,2);
+    int NL = raiseToPower(2, 2 - 1) - LAT;
+    printf("\nNon-linearity from LAT = %d \n", NL);
+    printf("\n");*/
+
+    /*int finalIter = 0;
     int mode = 1;
-    int N = 40;
-    int maxIter = 200;
+    int N = 4;
+    int maxIter = 3;
 
     FILE *file2;
-    fopen_s(&file2, "..\\PSO Derevianko Programs\\N = 40 MaxIter = 200\\Table results N, MaxIter, IterToFind, Time.txt", "a");
+    fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
     if (file2 == NULL) {
         printf("ERROR: Can't save sbox to file!\n");
         for (;;);
@@ -871,13 +877,13 @@ int main(int args, char **argv) {
             clock_t toc = clock();
 
             FILE *file;
-            fopen_s(&file, "..\\PSO Derevianko Programs\\N = 40 MaxIter = 200\\PSO results.txt", "a");
+            fopen_s(&file, "PSO results.txt", "a");
             if (file == NULL) {
                 printf("ERROR: Can't save sbox to file!\n");
                 for (;;);
             }
 
-            fopen_s(&file2, "..\\PSO Derevianko Programs\\N = 40 MaxIter = 200\\Table results N, MaxIter, IterToFind, Time.txt", "a");
+            fopen_s(&file2, "Table results N, MaxIter, IterToFind, Time.txt", "a");
             if (file2 == NULL) {
                 printf("ERROR: Can't save sbox to file!\n");
                 for (;;);
@@ -934,7 +940,7 @@ int main(int args, char **argv) {
             finalIter = 0;
             free(ar);
 
-
+*/
 
     /*int ar2[] = {128, 125, 69, 187, 240, 6, 98, 151, 186, 83, 118, 156, 97, 131, 250, 27, 86, 181, 67, 163, 107, 131, 41, 194, 61, 202, 33, 213, 171, 87, 224, 31, 231, 33, 79, 138, 8, 197, 247, 57, 222, 12, 127, 174, 154, 67, 108, 182, 5, 221, 125, 166, 167
             , 116, 136, 88, 109, 161, 28, 211, 100, 163, 66, 134, 60, 205, 0, 242, 137, 115, 226, 27, 159, 122, 170, 76, 129, 111, 227, 14, 45, 194, 193, 45, 213, 49, 110, 137, 223, 36, 58, 194, 140, 124, 62, 205, 48, 250, 97, 168, 26, 219, 28, 222, 144, 78, 200, 21, 17, 196, 30, 200, 21, 193, 148, 67, 114, 173, 164, 120, 228, 36, 108, 175, 40, 227, 247, 63, 127, 130, 122, 132, 143, 121, 221, 40, 197, 44, 201, 35, 158, 124, 197, 36, 233, 10, 60, 220, 84, 188, 214, 61, 2, 245, 222, 42, 20
@@ -988,7 +994,8 @@ int ar2[] = {100, 203, 184, 5, 10, 84, 209, 0, 74, 97, 225, 232, 187, 113, 214, 
     }
     printf("%d ", counter);*/
 
-  /* int ar [] = {64, 179, 59, 210, 224, 51, 19, 218, 185, 123, 152, 64, 60, 222, 149, 109, 189, 85, 145, 99, 114, 186, 214, 4, 195, 26, 181, 118, 41, 208, 215, 52, 215, 34, 79, 160, 92, 137, 76, 131, 187, 127, 121, 167, 21, 241, 95, 161, 64, 174, 143, 123,164, 106, 227, 55, 171, 116, 62, 251, 106, 149, 119, 146, 180, 99, 140, 65, 95, 168, 239, 2, 155, 125, 249, 5, 85, 147,191, 99, 126, 178, 17, 199, 250, 22, 29, 235, 214, 43, 227, 4, 119, 170, 202, 13, 55, 230, 236, 39, 247, 6, 164, 79, 141, 109, 12, 246, 104, 168, 97, 187, 151, 93, 27, 203, 56, 210, 60, 204, 170, 81, 124, 157, 32, 251, 126, 191, 127, 140, 4, 237, 223, 12, 44, 229, 6, 196, 39, 255, 131, 97, 42, 210, 130, 106, 174, 92, 77, 133, 233, 59, 124, 165, 10, 201, 150,111, 104, 139, 40, 221, 176, 95, 163, 118, 179, 124, 196, 0, 6, 216, 106, 142, 32, 222, 191, 81, 112, 132, 91, 149, 28,200, 212, 11, 65, 132, 21, 234, 8, 237, 203, 28, 243, 62, 32, 215, 144, 125, 100, 130, 6, 250, 170, 108, 64, 156, 1, 205, 110, 184, 133, 105, 98, 148, 41, 212, 28, 251, 136, 85, 53, 242, 136, 89, 83, 152, 72, 185, 27, 240, 178, 82, 51, 201, 87, 151, 94, 132, 40, 226, 164, 116, 135, 109, 131, 115, 149, 110, 67, 162, 31, 196, 65, 128};
+    /*int ar [] = {99, 124, 236, 123, 242, 6, 111, 197, 48, 1, 103, 43, 254, 32, 171, 157, 202, 68, 201, 227, 250, 89, 221, 240, 173, 212, 162, 175, 156, 164, 102, 192, 238, 253, 132, 208, 54, 31, 39, 230, 52, 165, 229, 241, 113, 33, 49, 21, 4, 199, 35, 195, 24, 150, 5, 154, 7, 18, 128, 226, 235, 214, 178, 117, 9, 131, 44, 26, 27, 110, 90, 160, 82, 59, 41, 179, 246, 125, 47, 147, 83, 209, 0, 237, 215, 252, 177, 91, 106, 203, 190, 57, 74, 76, 88, 207, 38, 239, 170, 251, 67, 77, 51, 133, 69, 249, 2, 127, 80, 60, 159, 168, 81, 163, 64, 143, 146, 118, 56, 245, 188, 182, 218, 216, 16, 255, 243, 210, 205, 12, 19, 119, 95, 151, 130, 23, 196, 167, 126, 61, 100, 93, 25, 115, 96, 129, 79, 220, 34, 42, 144, 136, 70, 183, 184, 20, 222, 94, 11, 219, 224, 50, 58, 10, 73, 107, 36, 92, 194, 211, 172, 98, 145, 149, 228, 121, 231, 200, 55, 109, 141, 213, 78, 169, 108, 86, 244, 234, 101, 122, 174, 8, 186, 120, 37, 46, 28, 166, 180, 198, 232, 71, 116, 63, 75, 189, 139, 138, 112, 62, 181, 114, 72, 3, 135, 14, 97, 53, 87, 185, 134, 193, 29, 158, 225, 248, 152, 17, 105, 217, 142, 148, 155, 30, 104, 233, 206, 85, 40, 223, 140, 161, 137, 13, 191, 176, 66, 22, 65, 153, 45, 15, 204, 84, 187, 247};
+
     int counter = 0;
     for (int i = 0; i < size; ++i){
         if(ar[i] == aesSbox[i]){
@@ -3202,7 +3209,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
     int arrNL[N];
     for (int q = 0; q < N; ++q){
         for(int w = 0; w < size; ++w){
-            printf("%d ",population[q][w]);
+            printf("%d, ",population[q][w]);
         }
         int LAT = LATMax(population[q],size,count);
         int NL = raiseToPower(2, count - 1) - LAT;
@@ -3303,7 +3310,6 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                 if (Vel[i][j] < 0) {
                     Vel[i][j] = myModulusDec((Vel[i][j] + 256), 256);
                 }
-                //printf("Vel[%d][%d] = %d ", i,j,Vel[i][j]);
                 int X = myModulusDec((population[i][j] + Vel[i][j]), 256);
                 int contains;
                 if (contains == 0) {
@@ -3354,6 +3360,14 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
             }
             //printf("\n");
         }
+        printf("\n\nVEL\n\n");
+        for (int q = 0; q < N; ++q) {
+            for (int w = 0; w < size; ++w) {
+                printf("%d, ", Vel[q][w]);
+            }
+            printf("\n");
+        }
+        printf("\n\nVEL\n\n");
         /*printf("\nNEW Arrays\n");
         for (int q = 0; q < 2*N; ++q){
             for(int w = 0; w < size; ++w){
@@ -3459,7 +3473,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
                 printf("\nLinear redundancy = %d \n", (256 - 1) - ucCheck3);
                 lr = (256 - 1) - ucCheck3;
             }
-            if (NL3 >= 106 && ai3 == 3 && lr == 0){
+            if (NL3 >= 104 && ai3 == 3 && lr == 0){
                 printf("current iter = %d ",curIter+1);
                 *finalIter = curIter+1;
                 maxIter = -99;
@@ -3509,6 +3523,93 @@ void bubblesortDescending(int *data, int size) {
             }
         }
     }
+}
+
+int *CombFromWHTMatrix(int *func, int size, int count){
+    int *result = calloc (size,sizeof(int));
+    for (int i = 0; i < size; ++i) {
+        result[i] = func[i];
+    }
+    for (int i = 0; i < size; ++i){
+        printf("%d, ", result[i]);
+    }
+    printf("\n");
+    int ac2 = 0;
+    int nl2 = 0;
+    int deg = 0;
+    int one = 0;
+    int zer = 0;
+    int newNl = 0;
+    while (1) {
+        if (ac2 < 8 && nl2 < 26 && deg<5 && one!=zer){
+            break;
+        }
+        for (int i = 0; i < size; ++i){
+            printf("%d, ", result[i]);
+        }
+        srand(time(NULL));
+        for (int i = 0; i < size; ++i) {
+            if (result[i] == 1) {
+                ++one;
+            } else if (result[i] == 0) {
+                ++zer;
+            }
+        }
+        for (int i = 0; i < size; ++i){
+            printf("%d, ", result[i]);
+        }
+        int *fxarr = HadamardCoefficients(result, size, count);
+        printf("\nHADAMARD COEFFICIENTS");
+        printf("\n");
+        for (int i = 0; i < size; ++i) {
+            printf("%d ", fxarr[i]);
+        }
+        int max1 = HadamardMax(fxarr, size);
+        //printf("\n max = %d", max1);
+        nl2 = HadamardNLinearity(max1, count);
+        printf("\n");
+        printf("\nHADAMARD NON LINEARITY = %d", nl2);
+        printf("\n");
+
+        printf("\n");
+        printf("\n");
+        int *ac = autoCorrelation(result, size, count);
+        for (int i = 0; i < size; ++i) {
+            printf("%d ", ac[i]);
+        }
+        ac2 = autoCorrelationMax(ac, size);
+        printf("\n");
+        printf("\nAUTO CORRELATION  = %d", ac2);
+        printf("\n");
+
+        deg = algebraicDeg(result, size, count);
+        printf("\n");
+        printf("\nDEG  = %d", deg);
+
+        printf("\n");
+        printf("\nN  = %d", count);
+        printf("\n");
+        printf("\nNON ZERO  = %d", one);
+        printf("\n");
+        printf("\nZERO  = %d", zer);
+        int *NewRes = calloc (size,sizeof(int));
+        int coeff = rand()%64;
+        if (one > zer) {
+            if (result[coeff] == 1) {
+                result[coeff] = 0;
+            } else {
+            }
+        }
+        else {
+            if (result[coeff] == 0) {
+                result[coeff] = 1;
+            } else {
+            }
+        }
+        one = 0;
+        zer = 0;
+    }
+    return result;
 }
 
 
