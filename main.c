@@ -4,15 +4,6 @@
 #include <time.h>
 #include <pthread.h>
 #include <math.h>
-#include <conio.h>
-
-typedef struct PSOParams_t {
-    int size;
-    int count;
-    int N;
-    int maxIter;
-    int mode;
-} PSOParams_t;
 
 int raiseToPower(int num, int pow);
 
@@ -142,13 +133,15 @@ int NLOfSBoxDec(int *sbox, int size, int count);
 
 int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode, int *finalIter);
 
-void FisherYates(int *player, int n);
+void FisherYates(int *arr, int n);
 
 void bubblesortDescending(int *data, int size);
 
 int myModulusDec(int number, int mod);
 
 int *CombFromWHTMatrix(int *func, int size, int count);
+
+int *CombFromWHTGoodComb(int *func, int size, int count);
 
 CONST int aesSbox[] = {99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118, 202, 130, 201, 125, 250,
                        89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192, 183, 253, 147, 38, 54, 63, 247, 204, 52, 165,
@@ -178,8 +171,8 @@ int main(int args, char **argv) {
             printf("%d ", ar[i*size+j]);
         }
         printf("\n");
-    }/*
-    /*int *ar3 = calloc(size, sizeof(int));
+    }
+    int *ar3 = calloc(size, sizeof(int));
     int modulus = 0;
     for (int t = 0, k = size - 1; t < size; ++t, k--) {
         int *ar2 = massToBooleanFunc(binElems, ar, size, n, t);
@@ -447,13 +440,23 @@ int main(int args, char **argv) {
     /*n = 4;
     size = raiseToPower(2,n);*/
 
-    int fx2[] = {1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,0,1,0,1,1,0};
+    //int fxWHT[] = {1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,0,1,0,1,1,0};
 
-    //int fx2[] = {1,1,0,1,1,1,0,1,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,0,1,0,1,1,0};
-
+    int fx1[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+                 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0};
+    int fx2[] = {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0,
+                 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0};
+    int fx3[] = {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0,
+                 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0};
+    int fx4[] = {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0,
+                 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0};
+    int fx5[] = {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0,
+                 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0};
     size = 64;
     n = 6;
-    int *fxres = CombFromWHTMatrix(fx2, size, n);
+    //int *fxWHTres = CombFromWHTMatrix(fxWHT, size, n);
+    int *fxres = CombFromWHTGoodComb(fx3, size, n);
+    system("PAUSE");
 
     //int *ar9 = roundableHillClimbing(fx2, size, n);
 
@@ -3540,14 +3543,15 @@ int *CombFromWHTMatrix(int *func, int size, int count){
     int one = 0;
     int zer = 0;
     int newNl = 0;
+    int counter = 0;
     while (1) {
-        if (ac2 < 8 && nl2 < 26 && deg<5 && one!=zer){
-            break;
-        }
         for (int i = 0; i < size; ++i){
             printf("%d, ", result[i]);
         }
         srand(time(NULL));
+        int flag = rand();
+        ++counter;
+        srand((counter*flag)%1000);
         for (int i = 0; i < size; ++i) {
             if (result[i] == 1) {
                 ++one;
@@ -3555,9 +3559,10 @@ int *CombFromWHTMatrix(int *func, int size, int count){
                 ++zer;
             }
         }
-        for (int i = 0; i < size; ++i){
+        /*for (int i = 0; i < size; ++i){
             printf("%d, ", result[i]);
-        }
+        }*/
+        printf("\n");
         int *fxarr = HadamardCoefficients(result, size, count);
         printf("\nHADAMARD COEFFICIENTS");
         printf("\n");
@@ -3592,22 +3597,211 @@ int *CombFromWHTMatrix(int *func, int size, int count){
         printf("\nNON ZERO  = %d", one);
         printf("\n");
         printf("\nZERO  = %d", zer);
-        int *NewRes = calloc (size,sizeof(int));
+        if (ac2 == 8 && nl2 == 26 && deg == 5 && one==zer){
+            printf("\nRES\n");
+            for (int i = 0; i < size; ++i){
+                printf("%d, ", result[i]);
+            }
+            break;
+        }
         int coeff = rand()%64;
+        int coeff2 = (rand()+rand())%64;
+        //int coeff3 = (rand()+rand()+rand())%64;
+        //int coeff4 = (rand()+rand()+rand()+rand())%64;
+        printf("\n coeff = %d", coeff);
+        printf("\n coeff2 = %d", coeff2);
+        //printf("\n coeff3 = %d", coeff3);
+        //printf("\n coeff4 = %d", coeff4);
         if (one > zer) {
             if (result[coeff] == 1) {
                 result[coeff] = 0;
-            } else {
+            }
+            if (result[coeff2] == 1) {
+                result[coeff2] = 0;
+            }
+            /*if (result[coeff3] == 1) {
+                result[coeff3] = 0;
+            }
+            if (result[coeff4] == 1) {
+                result[coeff4] = 0;
+            }*/
+            else {
             }
         }
         else {
             if (result[coeff] == 0) {
                 result[coeff] = 1;
-            } else {
+            }
+            if (result[coeff2] == 0) {
+                result[coeff2] = 1;
+            }
+            /*if (result[coeff3] == 1) {
+                result[coeff3] = 0;
+            }
+            if (result[coeff4] == 1) {
+                result[coeff4] = 0;
+            }*/
+            else {
             }
         }
         one = 0;
         zer = 0;
+        free(fxarr);
+        free(ac);
+    }
+    return result;
+}
+
+int *CombFromWHTGoodComb(int *func, int size, int count){
+    int *result = calloc (size,sizeof(int));
+    for (int i = 0; i < size; ++i) {
+        result[i] = func[i];
+    }
+    for (int i = 0; i < size; ++i){
+        printf("%d, ", result[i]);
+    }
+    printf("\n");
+    int ac2 = 0;
+    int nl2 = 0;
+    int deg = 0;
+    int one = 0;
+    int zer = 0;
+    int newNl = 0;
+    int counter = 0;
+    while (1) {
+        for (int i = 0; i < size; ++i){
+            printf("%d, ", result[i]);
+        }
+        srand(time(NULL));
+        int flag = rand();
+        ++counter;
+        srand((counter*flag)%1000);
+        for (int i = 0; i < size; ++i) {
+            if (result[i] == 1) {
+                ++one;
+            } else if (result[i] == 0) {
+                ++zer;
+            }
+        }
+        /*for (int i = 0; i < size; ++i){
+            printf("%d, ", result[i]);
+        }*/
+        printf("\n");
+        int *fxarr = HadamardCoefficients(result, size, count);
+        printf("\nHADAMARD COEFFICIENTS");
+        printf("\n");
+        for (int i = 0; i < size; ++i) {
+            printf("%d ", fxarr[i]);
+        }
+        int max1 = HadamardMax(fxarr, size);
+        //printf("\n max = %d", max1);
+        nl2 = HadamardNLinearity(max1, count);
+        printf("\n");
+        printf("\nHADAMARD NON LINEARITY = %d", nl2);
+        printf("\n");
+
+        printf("\n");
+        printf("\n");
+        int *ac = autoCorrelation(result, size, count);
+        for (int i = 0; i < size; ++i) {
+            printf("%d ", ac[i]);
+        }
+        ac2 = autoCorrelationMax(ac, size);
+        printf("\n");
+        printf("\nAUTO CORRELATION  = %d", ac2);
+        printf("\n");
+
+        deg = algebraicDeg(result, size, count);
+        printf("\n");
+        printf("\nDEG  = %d", deg);
+
+        printf("\n");
+        printf("\nN  = %d", count);
+        printf("\n");
+        printf("\nNON ZERO  = %d", one);
+        printf("\n");
+        printf("\nZERO  = %d", zer);
+        if (ac2 == 8 && nl2 == 26 && deg == 5 && one==zer){
+            printf("\nRES\n");
+            for (int i = 0; i < size; ++i){
+                printf("%d, ", result[i]);
+            }
+            break;
+        }
+        int *NewRes = calloc (size,sizeof(int));
+        for (int i = 0; i < size; ++i){
+            NewRes[i] = result[i];
+        }
+        int coeff = rand()%64;
+        int coeff2 = (rand()+rand())%64;
+        //int coeff3 = (rand()+rand()+rand())%64;
+        //int coeff4 = (rand()+rand()+rand()+rand())%64;
+        printf("\n coeff = %d", coeff);
+        printf("\n coeff2 = %d", coeff2);
+        //printf("\n coeff3 = %d", coeff3);
+        //printf("\n coeff4 = %d", coeff4);
+            if (result[coeff] == 1 && result[coeff2] == 0) {
+                NewRes[coeff] = 0;
+                NewRes[coeff2] = 1;
+            }
+            else if (result[coeff] == 0 && result[coeff2] == 1) {
+                NewRes[coeff] = 1;
+                NewRes[coeff2] = 0;
+            }
+
+        int *fxarr2 = HadamardCoefficients(NewRes, size, count);
+        int max2 = HadamardMax(fxarr2, size);
+        //printf("\n max = %d", max1);
+        int nl3 = HadamardNLinearity(max2, count);
+        printf("\n");
+        printf("\nHADAMARD NON LINEARITY = %d", nl3);
+        printf("\n");
+
+        printf("\n");
+        printf("\n");
+        int *acMs = autoCorrelation(NewRes, size, count);
+        int ac3 = autoCorrelationMax(acMs, size);
+        printf("\n");
+        printf("\nAUTO CORRELATION  = %d", ac3);
+        printf("\nNEWRES\n");
+        for (int i = 0; i < size; ++i){
+            printf("%d, ", NewRes[i]);
+        }
+        printf("\n");
+        printf("\n");
+        if (nl3 >= nl2 && ac3 <=ac2){
+            for (int i = 0; i < size; ++i){
+                result[i] = NewRes[i];
+            }
+        }
+        else{
+
+        }
+            /*if (result[coeff2] == 1) {
+                result[coeff2] = 0;
+            }*/
+                /*if (result[coeff3] == 1) {
+                    result[coeff3] = 0;
+                }
+                if (result[coeff4] == 1) {
+                    result[coeff4] = 0;
+                }*/
+            /*if (result[coeff2] == 0) {
+                result[coeff2] = 1;
+            }*/
+                /*if (result[coeff3] == 1) {
+                    result[coeff3] = 0;
+                }
+                if (result[coeff4] == 1) {
+                    result[coeff4] = 0;
+                }*/
+        one = 0;
+        zer = 0;
+        free(fxarr);
+        free(ac);
+        free(NewRes);
+        free(fxarr2);
+        free(acMs);
     }
     return result;
 }
