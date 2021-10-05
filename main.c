@@ -3528,7 +3528,7 @@ int *particleSwarmOptimization(int size, int count, int N, int maxIter, int mode
     return result;
 }
 
-//Перемішування Фішера-Йейтса
+//Перемішування Фішера-Йейтсаq
 
 void FisherYates(int *arr, int n) {
     int i, j, tmp;
